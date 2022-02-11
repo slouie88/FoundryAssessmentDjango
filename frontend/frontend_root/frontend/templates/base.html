@@ -11,22 +11,11 @@
 <body>
 <div id="wrapper">
   <header id="header">
-    <div id="logo"><img src="{% static 'logo.jpg' %}" alt=""/></div>
-      <span style="float: right;">
-        {% if user.is_authenticated %}
-          Hello, {{ user.username }}. <a href="{% url 'logout' %}?next=/">Log out</a>.
-        {% else %}
-          Not logged in. <a href="{% url 'login' %}?next=/">Log in</a>.
-        {% endif %}
-      </span>
-    <div id="topbanner"><img src="{% static 'top_banner.png' %}" width="800" height="200" alt=""/></div>    
+    <div id="topbanner"><img src="{% static 'top_banner.png' %}" width="500" height="100" alt=""/></div>    
   </header>
   <aside id="leftsidebar">
     <nav id="nav">
     <ul>
-      <!-- {% block sidenav %}
-      <li></li>
-      {% endblock sidenav %} -->
       <li><a href="/">Home</a></li>
       <li><a href="/employees">Employees</a></li>
       <li><a href="/clients">Clients</a></li>
@@ -37,6 +26,7 @@
     </nav>
   </aside>
   <section id="main">
+    <br>
     {% block content %}
       <h1>Welcome!</h1>
       <p>This is a website application for managing the client engagements of employees.</p>
