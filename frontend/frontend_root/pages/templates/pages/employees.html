@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Employees{% endblock title %} 
+
+{% block content %}
+{% autoescape off %} 
+<table style="border-collapse:collapse">
+    <tr class="quotehdr">
+        <th>Id</th>
+        <th>Employee Name</th>
+    </tr>
+    {% for employee in employees %}
+        <tr class="quoterow {% cycle '' 'altrow' %}">
+            <td>{{ employee.id }}</td>
+            <td>{{ employee.name }}</td>
+        </tr>
+    {% endfor %}
+
+{% endautoescape %} 
+
+<p>
+    Page last updated: {{ last_updated|date:'D d F Y'}}
+</p>
+{% endblock content %}
