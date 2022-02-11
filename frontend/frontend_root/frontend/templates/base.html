@@ -24,12 +24,13 @@
   <aside id="leftsidebar">
     <nav id="nav">
     <ul>
-      {% block sidenav %}
-      <li>Menu 1</li><li>Menu 2</li><li>Menu 3</li>
-      {% endblock sidenav %}
-      <li><a href="/contact">Contact Us</a></li>
-      <li><a href="/quote/">Get a Quote</a></li>
-      <li><a href="/quote/show">Show Quotes</a></li>
+      <!-- {% block sidenav %}
+      <li></li>
+      {% endblock sidenav %} -->
+      <li><a href="/">Home</a></li>
+      <li><a href="/employees">Employees</a></li>
+      <li><a href="/clients">Clients</a></li>
+      <li><a href="/engagements">Engagements</a></li>
     </ul>
     </nav>
     </nav>
@@ -38,10 +39,10 @@
   <section id="main">
     {% block content %}
       <h1>Welcome!</h1>
-      <p>This is the site template</p>
+      <p>This is a website application for managing the client engagements of employees.</p>
     {% endblock content %}  
   </section>
-  <footer id="footer">Copyright &copy; 2021 Meandco Web Design</footer>
+  <footer id="footer">Copyright &copy; 2021 Blackbook.ai</footer>
 </div>
 </body>
 </html>
