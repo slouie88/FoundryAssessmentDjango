@@ -10,13 +10,13 @@
 
 <table style="border-collapse:collapse">
     <tr class="quotehdr">
-        <th>Employee Id</th>
-        <th>Employee Name</th>
+        <th>Client Id</th>
+        <th>Client Name</th>
     </tr>
-    {% for employee in employees %}
+    {% for client in clients %}
         <tr class="quoterow {% cycle '' 'altrow' %}">
-            <td>{{ employee.id }}</td>
-            <td>{{ employee.name }}</td>
+            <td>{{ client.id }}</td>
+            <td>{{ client.name }}</td>
         </tr>
     {% endfor %}
 </table>
