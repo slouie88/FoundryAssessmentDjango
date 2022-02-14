@@ -17,12 +17,14 @@ def index(request):
 """
 Render either the employees, clients or engagements page.
 """
-def render_page(request):
-    content = requests.get('http://localhost:3000' + request.path)
+def render_page(request, id=''):
+    path = request.path
+    content = requests.get('http://localhost:3000' + path).json()
     last_updated = datetime.now()
     title = ''
     html_page = ''
 
+    # Determine which template to render.
     if 'employees' in request.path:
         html_page = 'pages/employees.html'
         title = 'Employees'
@@ -33,8 +35,13 @@ def render_page(request):
         html_page = 'pages/engagements.html'
         title = 'Engagements'
 
+    # Determine if a specific employee Id is being searched.
+    if id != '':
+        content = [content]
+
+    # Context to render alongside the appropriate template.
     context = {
-        "content": content.json(),
+        "content": content,
         "last_updated": last_updated,
         "pageTitle": title
     }
