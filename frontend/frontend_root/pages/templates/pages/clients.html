@@ -13,7 +13,7 @@
         <th>Client Id</th>
         <th>Client Name</th>
     </tr>
-    {% for client in clients %}
+    {% for client in content %}
         <tr class="quoterow {% cycle '' 'altrow' %}">
             <td>{{ client.id }}</td>
             <td>{{ client.name }}</td>

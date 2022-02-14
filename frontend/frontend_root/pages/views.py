@@ -1,10 +1,10 @@
 from asyncio.windows_events import NULL
+import re
 from django.shortcuts import render
 
 from datetime import datetime
 import requests
 
-# Create your views here.
 """
 Render the home page of the website.
 """
@@ -15,43 +15,30 @@ def index(request):
 ### GET Requests for employees, clients and engagements ###
 
 """
-Render the employees page, displaying the list of employees.
+Render either the employees, clients or engagements page.
 """
-def get_employees(request):
-    employees = requests.get('http://localhost:3000/employees')
+def render_page(request):
+    content = requests.get('http://localhost:3000' + request.path)
     last_updated = datetime.now()
-    context = {
-        "employees": employees.json(),
-        "last_updated": last_updated,
-        "pageTitle": "Employees"
-    }
-    
-    return render(request, 'pages/employees.html', context)
+    title = ''
+    html_page = ''
 
-"""
-Render the clients page, displaying the list of clients.
-"""
-def get_clients(request):
-    clients = requests.get('http://localhost:3000/clients')
-    last_updated = datetime.now()
-    context = {
-        "clients": clients.json(),
-        "last_updated": last_updated,
-        "pageTitle": "Clients"
-    }
-    
-    return render(request, 'pages/clients.html', context)
+    if 'employees' in request.path:
+        html_page = 'pages/employees.html'
+        title = 'Employees'
+    elif 'clients' in request.path:
+        html_page = 'pages/clients.html'
+        title = 'Clients'
+    elif 'engagements' in request.path:
+        html_page = 'pages/engagements.html'
+        title = 'Engagements'
 
-"""
-Render the engagements page, displaying the list of engagements.
-"""
-def get_engagements(request):
-    engagements = requests.get('http://localhost:3000/engagements')
-    last_updated = datetime.now()
     context = {
-        "engagements": engagements.json(),
+        "content": content.json(),
         "last_updated": last_updated,
-        "pageTitle": "Engagements"
+        "pageTitle": title
     }
 
-    return render(request, 'pages/engagements.html', context)
+    return render(request, html_page, context)
+
+
