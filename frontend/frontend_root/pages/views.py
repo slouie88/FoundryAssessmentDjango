@@ -1,8 +1,9 @@
-from asyncio.windows_events import NULL
 import re
 from django.shortcuts import render
+from django.http import Http404, HttpResponseRedirect
 
 from datetime import datetime
+from .forms import EmployeeClientForm
 import requests
 
 """
@@ -25,17 +26,16 @@ def render_page(request, id=''):
     html_page = ''
 
     # Determine which template to render.
-    if 'employees' in request.path:
+    if 'employees' in path:
         html_page = 'pages/employees.html'
         title = 'Employees'
-    elif 'clients' in request.path:
+    elif 'clients' in path:
         html_page = 'pages/clients.html'
         title = 'Clients'
-    elif 'engagements' in request.path:
+    elif 'engagements' in path:
         html_page = 'pages/engagements.html'
         title = 'Engagements'
 
-    # Determine if a specific employee Id is being searched.
     if id != '':
         content = [content]
 
@@ -47,5 +47,34 @@ def render_page(request, id=''):
     }
 
     return render(request, html_page, context)
+
+"""
+Renders the employees/clientshh page according to the user's search.
+"""
+def employee_client_search(request):
+    if request.method == "POST":
+        form = EmployeeClientForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            path = 'employees'
+            
+            if 'clients' in request.path:
+                path = 'clients'
+
+            if cd['id'] != '':
+                try:
+                    return HttpResponseRedirect(cd['id'])
+                except:
+                    raise Http404("Id does not exist")
+            elif cd['name'] != '':
+                content = requests.get('http://localhost:3000' + path).json()
+                for entity in content:
+                    if entity.name != cd['name']:
+                        content.remove(entity)
+                return render(request, 'pages/' + path + '.html')
+    else:
+        form = EmployeeClientForm()
+
+    return render(request, 'pages/employeeclientsearch.html', {'form': form, 'pageTitle':'Employee/Client Search'})
 
 
