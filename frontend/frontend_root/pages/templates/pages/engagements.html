@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}<title>{{ pageTitle }}</title>{% endblock title %} 
+
+{% block content %}
+{% autoescape off %} 
+<p style="text-align:center">
+    Page last updated: {{ last_updated|date:'D d F Y'}}
+</p>
+
+<table class="centerTable">
+    <tr class="quotehdr">
+        <th>Engagemment Id</th>
+        <th>Name</th>
+        <th>Client Id</th>
+        <th>Employee ID</th>
+        <th>Description</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+    </tr>
+    {% for engagement in engagements %}
+        <tr class="quoterow {% cycle '' 'altrow' %}">
+            <td>{{ engagement.id }}</td>
+            <td>{{ engagement.name }}</td>
+            <td>{{ engagement.client }}</td>
+            <td>{{ engagement.employee }}</td>
+            <td>{{ engagement.description }}</td>
+            <td>{{ engagement.started }}</td>
+            <td>{{ engagement.ended }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endautoescape %} 
+
+{% endblock content %}
